@@ -1,0 +1,14 @@
+[Unit]
+Description=The Testy Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node app.js
+WorkingDirectory=/home/nathan/testy
+StandardOutput=inherit
+StandardError=inheri
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
