@@ -14,7 +14,7 @@ whiteSwitch.watch(function (err, value) { //Watch for hardware interrupts on pus
   }
   switchStatus = value
 });
-app.get('/', (req, res) => res.send('Welcome to the garage door manager!<br />' + `the switch status is ${switchStatus}` ))
+app.get('/api/sensors', (req, res) => res.send([{ name: 'white switch', status: switchStatus }]))
 
 function unexportOnClose() { //function to run when exiting program
   whiteSwitch.unexport(); // Unexport Button GPIO to free resources
