@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/node app.js
-WorkingDirectory=/home/nathan/testy
+WorkingDirectory=/home/nathan/testy/testy-api
 StandardOutput=inherit
 StandardError=inheri
 Restart=always
