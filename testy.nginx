@@ -4,4 +4,8 @@ server {
   server_name 192.168.0.201;
 
   root /home/nathan/testy/testy-ui/dist;
+
+  location /api {
+    proxy_pass http://localhost:8081/api;
+  }
 }
