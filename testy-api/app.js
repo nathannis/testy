@@ -4,20 +4,30 @@ const app = express()
 const config = require('./config.json')
 const port = config.port
 const secrets =  require('./secrets.json')
-var switchStatus = null
-
-var whiteSwitch = new Gpio(2, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
-whiteSwitch.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
-  if (err) { //if an error
-    console.error('There was an error', err); //output error message to console
-  return;
+var gpioSensors = []
+for (i = 0; i < config.devices.length; i++ ) {
+  for (j = 0; i < config.devices[i].sensors.length; j ++) {
+    var sensor = config.devices[i].sensors[j]
+    var gpio = new Gpio(sensor.gpioConfig.pin, sensor.gpioConfig.direction, sensor.gpioConfig.other)
+    gpio.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
+      if (err) { //if an error
+        console.error('There was an error', err) //output error message to console
+        return
+      }
+      sensor.status = value
+    });
+    gpioSensors.push({
+      gpio: gpio,
+      sensor: sensor
+    })
   }
-  switchStatus = value
-});
+}
 app.get('/api/devices', (req, res) => res.send(config.devices))
 
 function unexportOnClose() { //function to run when exiting program
-  whiteSwitch.unexport(); // Unexport Button GPIO to free resources
+  for (i = 0; i < gpioSensors.length; i++) {
+    gpioSensors[i].gpio.unexport()
+  }
 };
 
 process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c

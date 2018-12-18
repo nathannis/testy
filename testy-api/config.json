@@ -1,16 +1,35 @@
 {
   "port": 8081,
-  "key": "value",
-  "devices": [
-    {
-      "id": "gd1",
-      "name": "Garage Door",
-      "sensors" : [
-        {
-          "id": "sid1",
-          "name": "is door fully open"
+  "devices": [{
+    "id": "gd1",
+    "name": "Garage Door",
+    "sensors": [{
+        "id": "sid1",
+        "name": "is door fully open",
+        "gpioConfig": {
+          "pin": 2,
+          "direction": "in",
+          "other": "both"
         }
-      ] 
-    }
-  ]
+      },
+      {
+        "id": "sid2",
+        "name": "is door half open",
+        "gpioConfig": {
+          "pin": 3,
+          "direction": "in",
+          "other": "both"
+        }
+      },
+      {
+        "id": "sid3",
+        "name": "is door closed",
+        "gpioConfig": {
+          "pin": 4,
+          "direction": "in",
+          "other": "both"
+        }
+      }
+    ]
+  }]
 }
