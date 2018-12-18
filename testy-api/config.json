@@ -1,4 +1,16 @@
 {
   "port": 8081,
-  "key": "value"
+  "key": "value",
+  "devices": [
+    {
+      "id": "gd1",
+      "name": "Garage Door",
+      "sensors" : [
+        {
+          "id": "sid1",
+          "name": "is door fully open"
+        }
+      ] 
+    }
+  ]
 }
