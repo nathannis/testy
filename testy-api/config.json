@@ -11,24 +11,6 @@
           "direction": "in",
           "other": "both"
         }
-      },
-      {
-        "id": "sid2",
-        "name": "is door half open",
-        "gpioConfig": {
-          "pin": 3,
-          "direction": "in",
-          "other": "both"
-        }
-      },
-      {
-        "id": "sid3",
-        "name": "is door closed",
-        "gpioConfig": {
-          "pin": 4,
-          "direction": "in",
-          "other": "both"
-        }
       }
     ]
   }]

@@ -1,12 +1,10 @@
+// init sensors
 var Gpio = require('onoff').Gpio
-const express = require('express')
-const app = express()
 const config = require('./config.json')
-const port = config.port
-const secrets =  require('./secrets.json')
 var gpioSensors = []
+
 for (i = 0; i < config.devices.length; i++ ) {
-  for (j = 0; i < config.devices[i].sensors.length; j ++) {
+  for (j = 0; j < config.devices[i].sensors.length; j ++) {
     var sensor = config.devices[i].sensors[j]
     var gpio = new Gpio(sensor.gpioConfig.pin, sensor.gpioConfig.direction, sensor.gpioConfig.other)
     gpio.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
@@ -14,7 +12,9 @@ for (i = 0; i < config.devices.length; i++ ) {
         console.error('There was an error', err) //output error message to console
         return
       }
-      sensor.status = value
+      console.log(`sensor ${sensor.name} vaalue changed ${value}`)
+      sensor.gpioStatus = value
+      sensor.status = !value ? sensor.name : 'not ' + sensor.name 
     });
     gpioSensors.push({
       gpio: gpio,
@@ -22,7 +22,6 @@ for (i = 0; i < config.devices.length; i++ ) {
     })
   }
 }
-app.get('/api/devices', (req, res) => res.send(config.devices))
 
 function unexportOnClose() { //function to run when exiting program
   for (i = 0; i < gpioSensors.length; i++) {
@@ -32,5 +31,9 @@ function unexportOnClose() { //function to run when exiting program
 
 process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c
 
-console.log(`Secret: ${secrets.secret}`)
-app.listen(port, () => console.log(`Listening on port ${port}!`))
+// start listening for web requests
+const express = require('express')
+const app = express()
+app.get('/api/devices', (req, res) => res.send(config.devices))
+app.listen(config.port, () => console.log(`Listening on port ${config.port}!`))
+
