@@ -10,7 +10,20 @@
           "pin": 2,
           "direction": "in",
           "other": "both"
-        }
+        },
+	"openAction": "Fully Open",
+	"closeAction": "Closing"
+      },
+      {
+        "id": "sid2",
+        "name": "is door fully closed",
+        "gpioConfig": {
+          "pin": 3,
+          "direction": "in",
+          "other": "both"
+        },
+	"openAction": "Fully Closed",
+	"closeAction": "Opening"
       }
     ]
   }]
