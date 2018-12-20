@@ -1,17 +1,31 @@
 <template>
-  <div class="hello">
-    <h1>Devices</h1>
-    <div class="card bg-success" v-for="device in devices" :key="device.id">
-      <div class="card-header"><h2>{{device.name}}</h2></div>
-      <div class="card-body">
-        <h3>{{device.status}}</h3>
-        <div class="card bg-primary" v-for="sensor in device.sensors" :key="sensor.id">
-          <div class="card-header"><h2>Sensor {{sensor.name}}</h2></div>
-          <div class="card-body"><span>GPIO status: {{sensor.gpioStatus}}</span></div>
+  <main>
+    <div class="container">
+      <h1>Devices</h1>
+      <div class="row">
+        <div class="col-md-4" v-for="device in devices" :key="device.id">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header"><h2>{{device.name}}</h2></div>
+            <div class="card-body">
+              <b>{{device.status}}</b>
+            <div class="progress" v-if="device.progress">
+              <div class="progress-bar" role="progressbar" :aria-valuenow="device.progress"
+              aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                <span class="sr-only">{{device.progress}}% Complete</span>
+              </div>
+            </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div v-for="sensor in device.sensors" :key="sensor.id">
+                  <h2>Sensor: {{sensor.name}}</h2>
+                  <span>GPIO status: {{sensor.gpioStatus}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

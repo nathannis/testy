@@ -11,8 +11,9 @@
           "direction": "in",
           "other": "both"
         },
-	"openAction": "Fully Open",
-	"closeAction": "Closing"
+        "progressRage": -10,
+        "openAction": "Fully Open",
+        "closeAction": "Closing"
       },
       {
         "id": "sid2",
@@ -22,8 +23,9 @@
           "direction": "in",
           "other": "both"
         },
-	"openAction": "Fully Closed",
-	"closeAction": "Opening"
+        "progressRate": 10,
+        "openAction": "Fully Closed",
+        "closeAction": "Opening"
       }
     ]
   }]

@@ -15,6 +15,20 @@ config.devices.forEach(function (device) {
       console.log(`sensor ${sensor.name} value changed ${value}`)
       sensor.gpioStatus = value
       device.status = value ? sensor.closeAction : sensor.openAction
+      if (value) {
+        incrementallyChangeProgresss()
+        function incrementallyChangeProgresss() {
+          setTimeout(() => {
+            device.progress = device.progress + sensor.progressRate
+          }, 250)
+          if (sensor.progressRate < 0 && device.progress > 0) {
+            incrementallyChangeProgresss()
+          }
+          if (sensor.progressRate > 0 && device.progress < 100) {
+            incrementallyChangeProgresss()
+          }
+        }
+      }
     });
     gpioSensors.push({
       gpio: gpio,
