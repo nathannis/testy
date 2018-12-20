@@ -3,10 +3,8 @@ var Gpio = require('onoff').Gpio
 const config = require('./config.json')
 var gpioSensors = []
 
-for (i = 0; i < config.devices.length; i++ ) {
-  for (j = 0; j < config.devices[i].sensors.length; j ++) {
-    var device = config.devices[i]
-    var sensor = device.sensors[j]
+config.devices.forEach(function (device) {
+  device.sensors.forEach(function (sensor) {
     var gpio = new Gpio(sensor.gpioConfig.pin, sensor.gpioConfig.direction, sensor.gpioConfig.other)
     console.log(`registring with gpio sensor ${sensor.name} pin ${sensor.gpioConfig.pin}`)
     gpio.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
@@ -22,8 +20,8 @@ for (i = 0; i < config.devices.length; i++ ) {
       gpio: gpio,
       sensor: sensor
     })
-  }
-}
+  })
+})
 
 function unexportOnClose() { //function to run when exiting program
   for (i = 0; i < gpioSensors.length; i++) {
